@@ -1,0 +1,70 @@
+image: docker:latest
+
+services:
+- docker:1.13-dind
+
+stages:
+- build
+- test
+- deploy
+
+variables:
+  DOCKER_DRIVER: overlay
+  CI_REGISTRY: docker.yourlabs.org/oss/djnextjs
+  CONTAINER_TEST_IMAGE: $CI_REGISTRY:$CI_BUILD_REF_NAME
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY:latest
+  POSTGRES_DB: buzzdetect
+  POSTGRES_USER: buzzdetect
+  POSTGRES_PASSWORD: buzzdetect
+
+before_script:
+- which docker && docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY || true
+
+cache:
+  paths: [image.tar,pipcache]
+
+build:
+  stage: build
+
+  script: |
+    docker build --tag $CONTAINER_TEST_IMAGE .
+
+test:
+  stage: test
+  services:
+  - postgres:9.5
+  - redis:3.0
+  - docker:1.13-dind
+  script:
+    - docker run $CONTAINER_TEST_IMAGE sh -c "pip install -e /code[test]; cd /code; REDIS_URL=redis://$REDIS_PORT_6379_TCP_ADDR:6379 POSTGRES_HOST=$POSTGRES_PORT_5432_TCP_ADDR POSTGRES_USER=$POSTGRES_USER py.test src"
+
+pages:
+  stage: test
+  image: python:2
+  script: |
+    rm -rf public
+    mkdir -p pipcache
+    pip install --cache-dir pipcache -r requirements.txt -e . psycopg2 sphinx
+    cd docs
+    EVENT_DISABLED=1 DB_ENGINE=django.db.backends.sqlite3 make html
+    mv _build/html ../public
+  artifacts:
+    paths: [public]
+
+deploy:
+  stage: deploy
+  image: ubuntu:xenial
+  script: |
+    apt-get update -y
+    apt-get install --no-install-recommends -y openssh-client
+    mkdir -p ~/.ssh
+    echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    echo "$SSH_PUBLIC_KEY" > ~/.ssh/id_rsa.pub
+    chmod 700 ~/.ssh
+    chmod 600 ~/.ssh/*
+    vars="-oPort=2222 -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=false"
+    set -x
+    scp $vars deploy docker-compose.yml deploy@bd.yourlabs.org:.
+    ssh $vars deploy@bd.yourlabs.org "CI_BUILD_TOKEN=$CI_BUILD_TOKEN CONTAINER_RELEASE_IMAGE=$CONTAINER_RELEASE_IMAGE CI_REGISTRY=$CI_REGISTRY ./deploy"
+  only:
+    - master
