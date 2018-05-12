@@ -101,7 +101,12 @@ export default class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx)
     }
 
-    pageProps.serverState = JSON.parse(ctx.query.state)
+    if (ctx.query.state) {
+      pageProps.serverState = JSON.parse()
+    } else {
+      const res = await fetch('http://localhost:8000/_next/state')
+      pageProps.serverState = await res.json()
+    }
 
     return {pageProps}
   }
