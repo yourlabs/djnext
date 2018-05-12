@@ -36,17 +36,16 @@ Example project lives in src/djnext_example, see ``src/djnext_example/artist/url
 The template backend you added will make a request to the nextjs server you
 have on port 3000 with yarn dev.
 
-Watchstatic command
-===================
+Djnext command
+==============
 
-Run your manage.py watchstatic or yourproject watchstatic if your project has an entrypoint.
+Run your manage.py djnext or yourproject djnext if your project has an entrypoint.
 
-This will watch static/ directories of all apps in INSTALLED_APPS, and build
-static_root/ directory. Also, it creates a symlink from static_root/pages to
-pages/, so that yarn dev will find it.
+This will watch static/pages directories of all apps in INSTALLED_APPS, and build
+the pages/ directory, so that yarn dev will find it.
 
 On port 8000 we don't yet have auto frontend code reload, but you have it on
-port 3000 wit h watchstatic running at the same time.
+port 3000 with djnext command running at the same time.
 
 Install in your project
 =======================
@@ -59,7 +58,7 @@ With LOVE from POITOU CHARENTE
 
 ∞
 
-About
-=====
+Credit
+======
 
-This project was made possible by Thomas Binetruy, frontend engineer.
+Thanks to frontend engineer Thomas Binetruy for participating
