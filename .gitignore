@@ -6,16 +6,7 @@ __pycache__
 node_modules
 src/db.sqlite
 src/.coverage
-
-nightwatch/node_modules
-nightwatch/dist
-nightwatch/reports
-nightwatch/yarn.lock
-nightwatch/package-lock.json
-
 db.sqlite3
 .pytest_cache
 yarn-error.log
 _build/
-static_root
-pages

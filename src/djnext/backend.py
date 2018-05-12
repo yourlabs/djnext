@@ -26,13 +26,9 @@ class Backend(BaseEngine):
         target = 'pages/' + template_name
         result = finders.find(target, all=True)
         if not result:
-            raise TemplateDoesNotExist(exc.args, backend=self)
+            raise TemplateDoesNotExist(target, backend=self)
         return Template(path=result[0])
         '''
-        try:
-            return Template(self.engine.get_template(template_name))
-        except foobar.TemplateNotFound as exc:
-            raise TemplateDoesNotExist(exc.args, backend=self)
         except foobar.TemplateCompilationFailed as exc:
             raise TemplateSyntaxError(exc.args)
             '''
