@@ -65,11 +65,16 @@ class Template:
                 request = None
 
             context.update(cp(request))
-        print(context)
 
-        res = requests.get(
+        state = dict(menu=context['menu'])
+        response = requests.get(
             self.backend.options['NEXTJS_DSN'] + name,
-            dict(state=json.dumps(dict(menu=context['menu'])))
+            dict(state=json.dumps(state))
         )
-        print(res, res.content)
-        return res.content
+
+        print('REQUEST', self.backend.options['NEXTJS_DSN'] + name)
+        print('state=', state)
+        print('RESPONSE headers', response.headers)
+        print('RESPONSE content', response.content)
+
+        return response.content
