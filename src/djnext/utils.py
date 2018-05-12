@@ -21,11 +21,12 @@ def context_process(context=None):
 
         context.update(cp(request))
 
+    state = dict()
     for key, value in context.items():
         try:
             json.dumps(value)
         except:
             print('Cannot JSON parse key', key, 'with value', value)
         else:
-            context.pop(key)
-    return context
+            state[key] = value
+    return state
