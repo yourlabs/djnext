@@ -41,8 +41,10 @@ class Command(BaseCommand):
         settings.STATIC_ROOT = 'static_root'
         source = os.path.join(os.getcwd(), 'static_root/pages')
         target = os.path.join(os.getcwd(), 'pages')
-        if not os.path.exists(target):
+
+        if not os.path.islink(target):
             os.symlink(source, target)
+
         try:
             call_command('collectstatic', link=True, interactive=False)
         except FileNotFoundError as e:
