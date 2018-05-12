@@ -25,6 +25,7 @@ setup(
     keywords='django nextjs',
     install_requires=[
         'requests',
+        'watchdog',
     ],
     tests_require=['tox'],
     extras_require=dict(

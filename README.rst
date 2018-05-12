@@ -17,7 +17,7 @@ Run this commands as non root::
     cd djnext
     pip install --user --editable .[dev]
     yarn install
-    djnext watchstatic  # maintains nextjs pages/ directory for yarn dev
+    djnext djnext  # required for yarn dev to run
     yarn dev  # run localhost:3000
     djnext dev  # run localhost:8000
 
