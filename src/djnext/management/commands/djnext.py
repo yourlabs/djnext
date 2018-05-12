@@ -43,7 +43,12 @@ def run():
                 continue
             target = os.path.join('pages', missing)
             print('CP', source, ' -> ', target)
-            shutil.copyfile(source, target)
+            if os.path.isfile(source):
+                shutil.copyfile(source, target)
+            elif os.path.isdir(source):
+                shutil.copytree(source, target)
+            else:
+                print('WTF is', source, 'you poney?!')
 
         for changed in report.diff_files:
             target = os.path.join('pages', changed)
