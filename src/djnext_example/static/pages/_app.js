@@ -7,6 +7,9 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import InboxIcon from '@material-ui/icons/Inbox'
 import DraftsIcon from '@material-ui/icons/Drafts'
 
+require('es6-promise').polyfill()
+require('universal-fetch')
+
 const MenuLinks = ({ links })=> {
     const linkList = links.map((l, i) => (
             <ListItem button>
@@ -102,7 +105,7 @@ export default class MyApp extends App {
     }
 
     if (ctx.query.state) {
-      pageProps.serverState = JSON.parse()
+      pageProps.serverState = JSON.parse(ctx.query.state)
     } else {
       const res = await fetch('http://localhost:8000/_next/state')
       pageProps.serverState = await res.json()
