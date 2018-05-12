@@ -16,12 +16,14 @@ class DefaultAppConfig(apps.AppConfig):
 
     def set_options(self):
         self.set_settings()
+
         if not self.settings:
             settings.TEMPLATES.insert(0, dict(
                 BACKEND=self.module_name,
                 NAME='djnext',
             ))
             self.set_settings()
+        # todo: else log settings it found
 
         self.settings.setdefault('OPTIONS', {})
         self.options = self.settings['OPTIONS']
@@ -29,6 +31,8 @@ class DefaultAppConfig(apps.AppConfig):
             'NEXTJS_DSN',
             os.getenv('NEXTJS_DSN', 'http://localhost:3000')
         )
+
+        # todo: log final settings
 
     def ready(self):
         self.set_options()

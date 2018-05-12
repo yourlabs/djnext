@@ -23,3 +23,24 @@ INSTALLED_APPS = [
 
 ROOT_URLCONF = 'djnext_example.urls'
 WSGI_APPLICATION = 'djnext_example.wsgi.application'
+
+TEMPLATES = [
+    {
+        'BACKEND': 'djnext.backend.Backend',
+        'OPTIONS': {
+            'context_processors': [
+                'djnext_example.artist.context_processors.menu',
+            ]
+        },
+    }
+]
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
