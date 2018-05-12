@@ -66,7 +66,15 @@ class Template:
 
             context.update(cp(request))
 
-        state = dict(menu=context['menu'])
+        state = dict()
+        for key, value in context.items():
+            try:
+                json.dumps(value)
+            except:
+                print('Cannot JSON parse key', key, 'with value', value)
+            else:
+                state[key] = value
+
         response = requests.get(
             self.backend.options['NEXTJS_DSN'] + name,
             dict(state=json.dumps(state))
