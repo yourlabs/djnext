@@ -6,6 +6,7 @@ import Drawer from 'material-ui/Drawer'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import InboxIcon from '@material-ui/icons/Inbox'
 import DraftsIcon from '@material-ui/icons/Drafts'
+import TextField from 'material-ui/TextField'
 
 require('es6-promise').polyfill()
 require('universal-fetch')
@@ -15,13 +16,13 @@ const MenuLink = ({ title, url }) => {
         a: {
             color: 'inherit',
             textDecoration: 'none',
-        }
+        },
     }
 
     return (
         <Link href={ url }>
             <a style={ styles.a }>
-                <ListItem button>
+                <ListItem button onClick={ () => window.location = url }>
                     <ListItemText
                         primary={ title } />
                 </ListItem>
@@ -98,6 +99,44 @@ class Layout extends React.Component {
     }
 }
 
+class DJNextForm extends React.Component {
+    constructor(props) {
+        super(props)
+
+        const state = {}
+        this.state = props.form.fields.map(e => state[e.name] = "")
+
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    handleChange(name) {
+        return event => this.setState({ [name]: event.target.value })
+    }
+
+    render() {
+        const { fields } = this.props.form
+
+        console.log(fields, this.state, "state")
+
+        const form = fields.map((e, i) => (
+            <TextField
+                id={ e.name }
+                label={ e.label }
+                onChange={ this.handleChange }
+                value={ this.state[e.name] }
+                key={ i } />
+        ))
+
+        return (
+            <div>
+                <form noValidate autoComplete="off">
+                    { form }
+                </form>
+            </div>
+        )
+    }
+}
+
 export default class MyApp extends App {
   static async getInitialProps ({ Component, router, ctx }) {
     let pageProps = {}
@@ -156,6 +195,7 @@ export default class MyApp extends App {
                 <Component
                     openDrawer={ this.openDrawer }
                     { ...pageProps } />
+                <DJNextForm form={ serverState.form } />
             </Layout>
         </Container>
       )
