@@ -65,29 +65,37 @@ Install DjNext
 - Then add ``djnext`` to ``INSTALLED_APPS``.
 - Run ``manage.py djnext``
 
-It will automatically setup the template backend if you haven't yourself.
+It will automatically setup the template backend if you haven't yourself. This
+allows picking up React_ templates in JS from django.
+
+While you run ``yarn dev``, you also need to run the ``djnext`` management
+command to maintain the NextJS_ pages directory with the ``static/pages``
+directory of every INSTALLED_APPS.
+
+This will watch ``static/pages`` directories of all apps in INSTALLED_APPS, and
+build the ``pages/`` directory, so that yarn dev will find it.
 
 If you want to setup the template backend yourself and override options you can
 do as such:
 
 .. code-block:: python
 
-    TEMPLATES.insert(0, dict(
-        BACKEND='djnext.backend.Backend',
-        OPTIONS=dict(
-            NEXTJS_DSN='http://localhost:3000',
-        )
-    ))
+    TEMPLATES = [
+        {
+            'BACKEND': 'djnext.backend.Backend',
+            'OPTIONS': {
+                'NEXTJS_DSN': 'http://localhost:3000',  # default: from env var
+                'context_processors': [
+                    'djnext_example.artist.context_processors.menu',
+                ]
+            },
+        }
+    ]
 
-This allows picking up React_ templates in JS from django.
-
-While you run ``yarn dev``, you also need to run the ``djnext`` management
-command to maintain the NextJS_ pages directory with the ``static/pages``
-directory of every INSTALLED_APPS.
-Run the your manage.py djnext or yourproject djnext if your project has an entrypoint.
-
-This will watch static/pages directories of all apps in INSTALLED_APPS, and build
-the pages/ directory, so that yarn dev will find it.
+The above adds a context processor that will recieve the request as first
+argument if the django-threadlocals middleware is installed, otherwise None. In
+return, the context processor function must return a dict that will be merged
+to the template context before being serialized and sent to the NextJS_ server.
 
 Tutorial
 ========
