@@ -8,7 +8,8 @@ Isomorphic_ UI Development with Decorator_ pattern for Django_ with:
   development,
 
 As for what you can make with this, refer to both feature list of Django_ and
-NextJS_ :)
+NextJS_, but an example is that you get automatic client side reload, code
+chunking, offline first, and all.
 
 For fun & profit
 
@@ -62,6 +63,7 @@ Install DjNext
 - Install djnext with pip for example: ``pip install --user djnext``
 - Then, add urls for ``/_next``: ``path('_next', include('djnext.urls'))``,
 - Then add ``djnext`` to ``INSTALLED_APPS``.
+- Run ``manage.py djnext``
 
 It will automatically setup the template backend if you haven't yourself.
 
@@ -86,9 +88,6 @@ Run the your manage.py djnext or yourproject djnext if your project has an entry
 
 This will watch static/pages directories of all apps in INSTALLED_APPS, and build
 the pages/ directory, so that yarn dev will find it.
-
-On port 8000 we don't yet have auto frontend code reload, but you have it on
-port 3000 with djnext command running at the same time.
 
 Tutorial
 ========
