@@ -5,8 +5,15 @@ from django.views.generic import View
 
 import requests
 
+from .utils import context_process
+
 
 djnext = apps.get_app_config('djnext')
+
+
+class State(View):
+    def get(self, request, *args, **kwargs):
+        return http.JsonResponse(context_process())
 
 
 class Proxy(View):
