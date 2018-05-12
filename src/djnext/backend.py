@@ -1,3 +1,4 @@
+import hashlib
 import os
 
 from django.apps import apps
@@ -20,7 +21,7 @@ class Backend(BaseEngine):
         super().__init__(params)
 
     def from_string(self, template_code):
-        raise NotImplemented()
+        return Template(code=template_name, backend=self)
 
     def get_template(self, template_name):
         target = 'pages/' + template_name
@@ -31,9 +32,20 @@ class Backend(BaseEngine):
 
 
 class Template:
-    def __init__(self, path, backend=None):
+    def __init__(self, path=None, code=None, backend=None):
         self.path = path
+        self.code = code
         self.backend = backend
+
+        if self.code and not self.path:
+            name = hashlib.md5(self.code).encode('utf-8').hexdigest()
+            print('Rendering', name, 'for', self.code)
+            self.path = os.path.join('pages', name)
+
+        if self.code and not os.path.exists(self.path):
+            with open(self.path, 'w+') as f:
+                print('WRITING', self.path)
+                f.write(self.code)
 
     def render(self, context=None, request=None):
         name = self.path.split('/')[-1][:-3]  # remove .js
