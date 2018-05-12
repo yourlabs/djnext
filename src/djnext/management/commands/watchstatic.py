@@ -20,6 +20,8 @@ def gen_filenames(only_new=False):
         if os.path.isdir(path):
             for root, directories, filenames in os.walk(path):
                 for filename in filenames:
+                    if filename.startswith('.'):
+                        continue
                     paths.append(os.path.join(root, filename))
     return paths
 
