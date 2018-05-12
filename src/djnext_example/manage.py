@@ -17,6 +17,13 @@ def main(settings_module=None):
         warnings.warn('DEFAULTING ALLOWED_HOSTS=*')
         os.environ.setdefault('ALLOWED_HOSTS', '*')
 
+    if 'DATABASE_URL' not in os.environ:
+        os.environ.setdefault(
+            'DATABASE_URL',
+            'sqlite:///{}/.djnext_example.sqlite'.format(os.getenv('HOME'))
+        )
+        warnings.warn('DEFAULTING DATABASE_URL=' + os.getenv('DATABASE_URL'))
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
