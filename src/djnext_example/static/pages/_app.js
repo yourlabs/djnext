@@ -1,10 +1,26 @@
 import App, {Container} from 'next/app'
+import Link from 'next/link'
 import React from 'react'
 import Button from 'material-ui/Button'
 import Drawer from 'material-ui/Drawer'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import InboxIcon from '@material-ui/icons/Inbox'
 import DraftsIcon from '@material-ui/icons/Drafts'
+
+const MenuLinks = ({ links })=> {
+    const linkList = links.map((l, i) => (
+            <ListItem button>
+                <ListItemText primary={ l.title } />
+            </ListItem>
+    ))
+
+    return (
+        <List component="nav">
+            { linkList }
+        </List>
+    )
+}
+
 
 class Layout extends React.Component {
     render() {
@@ -85,7 +101,7 @@ export default class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx)
     }
 
-    console.log(JSON.parse(ctx.query))
+    pageProps.serverState = JSON.parse(ctx.query.state)
 
     return {pageProps}
   }
@@ -111,15 +127,18 @@ export default class MyApp extends App {
 
 
   render () {
-    const {Component, pageProps} = this.props
+      const {Component, pageProps} = this.props
+      const { serverState } = this.props.pageProps
+
       return (
         <Container>
             <Button
                 onClick={ this.openDrawer }
                 variant="raised"
                 color="primary">
-                Open Sidebar
+                Open Sidebarssssss
             </Button>
+            <MenuLinks links={ serverState.menu } />
             <Layout
                 openDrawer={ this.openDrawer }
                 isOpened={ this.state.isOpened }

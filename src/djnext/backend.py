@@ -67,7 +67,9 @@ class Template:
             context.update(cp(request))
         print(context)
 
-        return requests.get(
+        res = requests.get(
             self.backend.options['NEXTJS_DSN'] + name,
-            json.dumps(dict(menu=context['menu']))
-        ).content
+            dict(state=json.dumps(dict(menu=context['menu'])))
+        )
+        print(res, res.content)
+        return res.content
