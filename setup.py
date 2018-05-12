@@ -25,12 +25,12 @@ setup(
     keywords='django nextjs',
     install_requires=[
         'requests',
-        'django12factor',
     ],
     tests_require=['tox'],
     extras_require=dict(
         dev=[
           'django>=2.0',
+          'django12factor',
           'dj-static',
           'crudlfap',
         ],
