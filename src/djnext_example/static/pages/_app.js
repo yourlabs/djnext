@@ -85,6 +85,8 @@ export default class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx)
     }
 
+    console.log(JSON.parse(ctx.query))
+
     return {pageProps}
   }
 

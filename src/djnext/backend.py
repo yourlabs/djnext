@@ -1,4 +1,5 @@
 import hashlib
+import json
 import os
 
 from django.apps import apps
@@ -67,5 +68,6 @@ class Template:
         print(context)
 
         return requests.get(
-            self.backend.options['NEXTJS_DSN'] + name
+            self.backend.options['NEXTJS_DSN'] + name,
+            json.dumps(dict(menu=context['menu']))
         ).content
