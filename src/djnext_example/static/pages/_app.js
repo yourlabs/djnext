@@ -88,13 +88,45 @@ export default class MyApp extends App {
     return {pageProps}
   }
 
+  state = {
+    isOpened: false,
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.closeDrawer = this.closeDrawer.bind(this)
+    this.openDrawer = this.openDrawer.bind(this)
+  }
+
+  closeDrawer() {
+    this.setState({ isOpened: false })
+  }
+
+  openDrawer() {
+    this.setState({ isOpened: true })
+  }
+
+
   render () {
     const {Component, pageProps} = this.props
-    return <Container>
-      <Button variant="raised" color="primary">
-        Hello World from layout
-      </Button>
-      <Component {...pageProps} />
-    </Container>
+      return (
+        <Container>
+            <Button
+                onClick={ this.openDrawer }
+                variant="raised"
+                color="primary">
+                Open Sidebar
+            </Button>
+            <Layout
+                openDrawer={ this.openDrawer }
+                isOpened={ this.state.isOpened }
+                closeDrawer={ this.closeDrawer }>
+                <Component
+                    openDrawer={ this.openDrawer }
+                    { ...pageProps } />
+            </Layout>
+        </Container>
+      )
   }
 }
