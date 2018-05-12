@@ -10,7 +10,7 @@ from django.template.backends.base import BaseEngine
 
 import requests
 
-from .utils import context_process, state_process
+from .utils import context_process
 
 
 djnext = apps.get_app_config('djnext')
