@@ -1,10 +1,26 @@
 import React from 'react'
 import Button from 'material-ui/Button'
 
-const App = () => (
-  <Button variant="raised" color="primary">
-    Hello World from create2 yeah yeah
-  </Button>
-)
+class App extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <Button
+                    onClick={ this.props.openDrawer }
+                    variant="raised"
+                    color="primary">
+                    Hello World from create2 yeah yeah
+                </Button>
+            </div>
+        )
+    }
+}
 
 export default App
