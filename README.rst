@@ -11,6 +11,8 @@ For fun & profit
 Run the example project
 =======================
 
+Run this commands as non root::
+
     git clone https://git.yourlabs.org/oss/djnext
     cd djnext
     pip install --user --editable .[dev]
