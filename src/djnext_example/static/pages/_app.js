@@ -10,17 +10,41 @@ import DraftsIcon from '@material-ui/icons/Drafts'
 require('es6-promise').polyfill()
 require('universal-fetch')
 
-const MenuLinks = ({ links })=> {
-    const linkList = links.map((l, i) => (
-            <ListItem button>
-                <ListItemText primary={ l.title } />
-            </ListItem>
-    ))
+const MenuLink = ({ title, url }) => {
+    const styles = {
+        a: {
+            color: 'inherit',
+            textDecoration: 'none',
+        }
+    }
 
     return (
-        <List component="nav">
-            { linkList }
-        </List>
+        <Link href={ url }>
+            <a style={ styles.a }>
+                <ListItem button>
+                    <ListItemText
+                        primary={ title } />
+                </ListItem>
+            </a>
+        </Link>
+    )
+}
+
+const MenuLinks = props => {
+    const linkList = props.links.map((l, i) => <MenuLink title={ l.title } url={ l.url } key={ i } />)
+
+    const styles = {
+        wrapper: {
+            width: '200px',
+        }
+    }
+
+    return (
+        <div style={ styles.wrapper }>
+            <List component="nav">
+                { linkList }
+            </List>
+        </div>
     )
 }
 
@@ -50,29 +74,7 @@ class Layout extends React.Component {
                 <Drawer
                     open={ this.props.isOpened }
                     onClose={ this.props.closeDrawer }>
-                    <div
-                        tabIndex={0}
-                        role="button"
-                        onClick={closeDrawer}
-                        onKeyDown={closeDrawer}>
-                        <List component="nav">
-                            <div onClick={ this.props.closeDrawer }>
-                                <ListItem button>
-                                    <ListItemIcon>
-                                        <InboxIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Inbox" />
-                                </ListItem>
-                            </div>
-                            <ListItem button>
-                                <ListItemIcon>
-                                    <DraftsIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Drafts" />
-                            </ListItem>
-                        </List>
-                    </div>
-
+                    <MenuLinks links={ this.props.menuLinks } />
                     <Button
                         onClick={ this.props.closeDrawer }
                         variant="raised"
@@ -146,8 +148,8 @@ export default class MyApp extends App {
                 color="primary">
                 Open Sidebarssssss
             </Button>
-            <MenuLinks links={ serverState.menu } />
             <Layout
+                menuLinks={ serverState.menu }
                 openDrawer={ this.openDrawer }
                 isOpened={ this.state.isOpened }
                 closeDrawer={ this.closeDrawer }>
