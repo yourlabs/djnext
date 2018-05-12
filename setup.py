@@ -25,6 +25,7 @@ setup(
     keywords='django nextjs',
     install_requires=[
         'requests',
+        'django12factor',
     ],
     tests_require=['tox'],
     extras_require=dict(
