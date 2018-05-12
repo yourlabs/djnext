@@ -3,6 +3,7 @@ import os
 import django12factor
 globals().update(django12factor.factorise())
 
+STATIC_ROOT="static_root"
 '''
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
