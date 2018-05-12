@@ -38,8 +38,10 @@ def run():
         report = filecmp.dircmp('pages', d)
         report.report()
         for missing in report.right_only:
-            target = os.path.join('pages', missing)
             source = os.path.join(d, missing)
+            if source.split('/')[0].startswith('.'):
+                continue
+            target = os.path.join('pages', missing)
             print('CP', source, ' -> ', target)
             shutil.copyfile(source, target)
 
