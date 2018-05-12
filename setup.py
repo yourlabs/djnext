@@ -12,7 +12,7 @@ def read(fname):
 
 setup(
     name='djnext',
-    version='0.0.0',
+    version='0.0.1',
     description='Django-NextJS Isomorphic UI dev with Decorator pattern',
     author='James Pic',
     author_email='jamespic@gmail.com',
@@ -31,11 +31,12 @@ setup(
         dev=[
           'django>=2.0',
           'dj-static',
+          'crudlfap',
         ],
     ),
     entry_points={
         'console_scripts': [
-            'djnext = djnext.manage:main',
+            'djnext = djnext_example.manage:main',
         ],
     },
     classifiers=[

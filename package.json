@@ -1,23 +1,15 @@
 {
-  "name": "crudlfap",
-  "version": "0.4.0",
-  "description": "CRUDLFA+ framework for Django 2.0",
+  "name": "djnext-example",
+  "description": "Example NextJS project for djnext",
   "main": "index.js",
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start",
-    "test": "jest",
-    "lint": "eslint js",
-    "chrome-browser-test": "cd nightwatch && yarn test",
-    "ie-browser-test": "cd nightwatch && yarn test -e internet_explorer",
-    "firefox-browser-test": "cd nightwatch && yarn test -e firefox",
-    "eslint-nightwatch": "cd nightwatch && yarn run lint",
-    "browser-test": "cd nightwatch && yarn run test --config nightwatch-driver.json"
+    "start": "next start"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourlabs/crudlfap.git"
+    "url": "git+https://git.yourlabs.org/oss/djnext.git"
   },
   "keywords": [
     "django"
@@ -25,21 +17,11 @@
   "author": "∞ <jpic@yourlabs.org>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/yourlabs/crudlfap/issues"
+    "url": "https://git.yourlabs.org/oss/djnext/issues"
   },
-  "homepage": "https://github.com/yourlabs/crudlfap#readme",
-  "jest": {
-    "verbose": true,
-    "collectCoverage": true,
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "collectCoverageFrom": [
-      "*{js,jsx}",
-      "webpack.config.js"
-    ]
-  },
+  "homepage": "https://git.yourlabs.org/oss/djnext#readme",
   "dependencies": {
+    "material-ui": "^1.0.0-beta.47",
     "next": "^6.0.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
