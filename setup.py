@@ -24,6 +24,7 @@ setup(
     license='MIT',
     keywords='django nextjs',
     install_requires=[
+        'django-appwatch',
         'requests',
         'watchdog',
     ],

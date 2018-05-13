@@ -7,12 +7,6 @@ Isomorphic_ UI Development with Decorator_ pattern for Django_ with:
 - Django support for NextJS_ template rendering for perfect backend
   development,
 
-As for what you can make with this, refer to both feature list of Django_ and
-NextJS_, but an example is that you get automatic client side reload, code
-chunking, offline first, and all.
-
-For fun & profit
-
 Run the example project
 =======================
 
@@ -114,25 +108,23 @@ Example project lives in src/djnext_example, see ``src/djnext_example/artist/url
         template_name='create.js',
     )
 
-The template engine will use the static files resolver to find a file matching
-``pages/create.js``. In this case, it will request http://localhost:3000/create
-to render the ``pages/create.js`` script.
+The template backend queries the NextJS_ render server, because the djnext
+command exposed ``components/*js`` and ``pages/*js`` from your INSTALLED_APPS
+to NextJS_.
 
-This is made possible by the ``djnext`` management command which watches the
-``static/pages`` subdirectory of every INSTALLED_APPS and maintain a ``pages/``
-directory, which ``yarn dev`` is able to use.
+.. note:: For development, you need both ``yarn dev`` and ``manage.py djnext``.
 
 Troubbleshooting
 ----------------
 
-Try ``rm -rf node_modules .next && yarn install && yarn dev`` to start the
-NextJS server from a fresh install.
+Try ``rm -rf node_modules .next pages && yarn install && manage.py
+djnext & yarn dev`` to start the NextJS server from a fresh install.
 
 Authors
 =======
 
-- Frontend expertise: Thomas Binetruy <tbinetruy@yourlabs.org>
-- Backend expertise: James Pic <jpic@yourlabs.org>
+- Frontend research: Thomas Binetruy <tbinetruy@yourlabs.org>
+- Backend research: James Pic <jpic@yourlabs.org>
 
 .. _NextJS: https://nextjs.org
 .. _Django: https://www.djangoproject.com

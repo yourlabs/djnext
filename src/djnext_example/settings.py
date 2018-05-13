@@ -6,7 +6,8 @@ globals().update(django12factor.factorise())
 SECRET_KEY = os.environ.get('SECRET_KEY', 'notsecret')
 
 INSTALLED_APPS = [
-    'djnext',
+    'djnext',  # for template backend
+    'appwatch',  # for appwatch command
 
     'djnext_example',  # load layout template
     'djnext_example.artist',  # example app in this directory
