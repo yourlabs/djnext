@@ -2,21 +2,18 @@ import React from 'react'
 import Button from 'material-ui/Button'
 import Form from './components/form'
 
-class App extends React.Component {
+export default class extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-        }
+        this.state = {}
     }
 
     render() {
         return (
             <div>
-                <Form form={ serverState.form } />
+                <Form form={ this.props.serverState.form } />
             </div>
         )
     }
 }
-
-export default App
