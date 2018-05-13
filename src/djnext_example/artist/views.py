@@ -13,7 +13,7 @@ FORM_SPEC = {
         'label': 'label',
         'help_text': 'help_text',
     }],
-    'errors': []
+
 }
 
 
