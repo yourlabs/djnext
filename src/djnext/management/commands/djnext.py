@@ -30,35 +30,50 @@ def walk_django():
                     paths.append(os.path.join(root, 'pages'))
     return paths
 
+
+def run_path(d, target):
+    print('FOR ::::: ', d)
+    report = filecmp.dircmp(target, d)
+    report.report()
+    for missing in report.right_only:
+        source = os.path.join(d, missing)
+        if source.split('/')[0].startswith('.'):
+            continue
+        target = os.path.join(target, missing)
+        print('CP', source, ' -> ', target)
+        if os.path.isfile(source):
+            shutil.copyfile(source, target)
+        elif os.path.isdir(source):
+            shutil.copytree(source, target)
+        else:
+            print('WTF is', source, 'you poney?!')
+
+    for changed in report.diff_files:
+        target_file = os.path.join(target, changed)
+        source = os.path.join(d, changed)
+        print('!CP', source, ' -> ', target_file)
+        shutil.copyfile(source, target_file)
+
+    for e in report.common_dirs:
+        run_path(
+            os.path.join(d, e),
+            os.path.join(target, e)
+        )
+
+
 def run():
     if not os.path.isdir('pages'):
         os.makedirs('pages')
 
-    for d in walk_django():
-        report = filecmp.dircmp('pages', d)
-        report.report()
-        for missing in report.right_only:
-            source = os.path.join(d, missing)
-            if source.split('/')[0].startswith('.'):
-                continue
-            target = os.path.join('pages', missing)
-            print('CP', source, ' -> ', target)
-            if os.path.isfile(source):
-                shutil.copyfile(source, target)
-            elif os.path.isdir(source):
-                shutil.copytree(source, target)
-            else:
-                print('WTF is', source, 'you poney?!')
-
-        for changed in report.diff_files:
-            target = os.path.join('pages', changed)
-            source = os.path.join(d, changed)
-            print('!CP', source, ' -> ', target)
-            shutil.copyfile(source, target)
+    paths = walk_django()
+    while paths:
+        d = paths.pop()
+        run_path(d, 'pages')
 
     for root, directories, filenames in os.walk('pages'):
+        print('FOR :::', root)
         for f in filenames:
-            path = 'pages/' + f
+            path = os.path.join(root, f)
             result = finders.find(path, all=True)
             if not result:
                 print('RM', path)

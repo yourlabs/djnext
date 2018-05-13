@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from 'material-ui/Button'
+import Form from './components/form'
 
 class App extends React.Component {
     constructor(props) {
@@ -12,12 +13,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Button
-                    onClick={ this.props.openDrawer }
-                    variant="raised"
-                    color="primary">
-                    Hello World from create2 yeah yeah
-                </Button>
+                <Form form={ serverState.form } />
             </div>
         )
     }
