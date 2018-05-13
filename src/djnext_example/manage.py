@@ -1,6 +1,5 @@
 import os
 import sys
-import warnings
 
 
 def main(settings_module=None):
@@ -10,11 +9,11 @@ def main(settings_module=None):
     )
 
     if 'DEBUG' not in os.environ:
-        warnings.warn('DEFAULTING DEBUG=1')
+        print('DEFAULTING DEBUG=1')
         os.environ.setdefault('DEBUG', '1')
 
     if 'ALLOWED_HOSTS' not in os.environ:
-        warnings.warn('DEFAULTING ALLOWED_HOSTS=*')
+        print('DEFAULTING ALLOWED_HOSTS=*')
         os.environ.setdefault('ALLOWED_HOSTS', '*')
 
     if 'DATABASE_URL' not in os.environ:
@@ -22,7 +21,7 @@ def main(settings_module=None):
             'DATABASE_URL',
             'sqlite:///{}/.djnext_example.sqlite'.format(os.getenv('HOME'))
         )
-        warnings.warn('DEFAULTING DATABASE_URL=' + os.getenv('DATABASE_URL'))
+        print('DEFAULTING DATABASE_URL=' + os.getenv('DATABASE_URL'))
 
     try:
         from django.core.management import execute_from_command_line
