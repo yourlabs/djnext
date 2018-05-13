@@ -34,7 +34,6 @@ def walk_django():
 def run_path(d, target):
     print('FOR ::::: ', d)
     report = filecmp.dircmp(target, d)
-    report.report()
     for missing in report.right_only:
         source = os.path.join(d, missing)
         if source.split('/')[0].startswith('.'):

@@ -11,6 +11,9 @@ class App extends React.Component {
     }
 
     render() {
+        const { results } = this.props.serverState.object_list
+        const list = results.map((e, i) => <div key={ i }>{ e.name }</div>)
+
         return (
             <div>
                 <Button
@@ -19,6 +22,7 @@ class App extends React.Component {
                     color="primary">
                     Hello World from list
                 </Button>
+                { list }
             </div>
         )
     }
