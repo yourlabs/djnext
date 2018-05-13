@@ -35,25 +35,27 @@ def run_path(d, target):
     print('FOR ::::: ', d)
     report = filecmp.dircmp(target, d)
     for missing in report.right_only:
+        print('RIGHT ONLY', report.right_only)
         source = os.path.join(d, missing)
         if source.split('/')[0].startswith('.'):
             continue
-        target = os.path.join(target, missing)
-        print('CP', source, ' -> ', target)
+        destination = os.path.join(target, missing)
+        print('CP', source, ' -> ', destination)
         if os.path.isfile(source):
-            shutil.copyfile(source, target)
+            shutil.copyfile(source, destination)
         elif os.path.isdir(source):
-            shutil.copytree(source, target)
+            shutil.copytree(source, destination)
         else:
             print('WTF is', source, 'you poney?!')
 
     for changed in report.diff_files:
-        target_file = os.path.join(target, changed)
+        destination = os.path.join(target, changed)
         source = os.path.join(d, changed)
-        print('!CP', source, ' -> ', target_file)
-        shutil.copyfile(source, target_file)
+        print('!CP', source, ' -> ', destination)
+        shutil.copyfile(source, destination)
 
     for e in report.common_dirs:
+        print('ADDING ==', target, e)
         run_path(
             os.path.join(d, e),
             os.path.join(target, e)
